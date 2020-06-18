@@ -29,4 +29,4 @@ const text = `Tonight is the first time in a long time that I've talked to someo
 const m = new Markov();
 m.addCorpus(text);
 
-console.log(m.getSentence());
+console.log(m.getCorpus());

@@ -33,10 +33,11 @@ Markov.prototype.addSentence = function(sentence) {
   }
 };
 
-Markov.prototype.getSentence = function(startWord) {
+Markov.prototype.getSentence = function(startWord, length) {
   let currentWord = startWord || getWeigtedRandomFromObj(this.start);
   let sentence = currentWord;
-  const len = this.sentenceLengths[getRandIndexFromArray(this.sentenceLengths)];
+  const len =
+    length || this.sentenceLengths[getRandIndexFromArray(this.sentenceLengths)];
   for (let i = 0; i < len; i++) {
     const possibleNextWords = this.dict[currentWord];
     if (!possibleNextWords) {
@@ -58,6 +59,14 @@ Markov.prototype.addCorpus = function(str) {
   for (let sentence of sentences) {
     this.addSentence(sentence);
   }
+};
+
+Markov.prototype.getCorpus = function() {
+  const corpus = [];
+  for (let len of this.sentenceLengths) {
+    corpus.push(this.getSentence(null, len));
+  }
+  return corpus.join(". ");
 };
 
 //helper functions
