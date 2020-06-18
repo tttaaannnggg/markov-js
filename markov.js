@@ -25,7 +25,7 @@ Markov.prototype.addStart = function(word) {
 };
 
 Markov.prototype.addSentence = function(sentence) {
-  const words = sentence.split(/\s+/);
+  const words = sentence.split(/\s+/).filter(word => word.length);
   this.sentenceLengths.push(words.length);
   this.addStart(words[0]);
   for (let i = 0; i < words.length; i++) {
@@ -38,7 +38,11 @@ Markov.prototype.getSentence = function(startWord) {
   let sentence = currentWord;
   const len = this.sentenceLengths[getRandIndexFromArray(this.sentenceLengths)];
   for (let i = 0; i < len; i++) {
-    currentWord = getWeigtedRandomFromObj(this.dict[currentWord]);
+    const possibleNextWords = this.dict[currentWord];
+    if (!possibleNextWords) {
+      break;
+    }
+    currentWord = getWeigtedRandomFromObj(possibleNextWords);
     if (!currentWord) {
       break;
     }
@@ -48,8 +52,10 @@ Markov.prototype.getSentence = function(startWord) {
 };
 
 Markov.prototype.addCorpus = function(str) {
-  const sentences = str.split(/[\.\?\!]\s*/g);
-  for(let sentence of sentences){
+  const sentences = str
+    .split(/[\.\?\!]\s*/g)
+    .filter(sentence => sentence.length);
+  for (let sentence of sentences) {
     this.addSentence(sentence);
   }
 };
