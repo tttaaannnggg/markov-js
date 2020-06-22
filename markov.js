@@ -1,15 +1,16 @@
 function Markov() {
+  this.size = 0;
   this.dict = {};
   this.start = {};
   this.sentenceLengths = [];
 }
 
 Markov.prototype.addWord = function(word, nextWord) {
-  if (!nextWord) {
-    return;
-  }
   if (!this.dict[word]) {
     this.dict[word] = {};
+  }
+  if (!nextWord) {
+    return;
   }
   if (!this.dict[word][nextWord]) {
     this.dict[word][nextWord] = 0;
@@ -67,6 +68,43 @@ Markov.prototype.getCorpus = function() {
     corpus.push(this.getSentence(null, len));
   }
   return corpus.join(". ");
+};
+
+Markov.prototype.export = function() {
+  //export obj format: {
+  //  nodes: <node>[],
+  //  edges: <edge>[]
+  //}
+  //node format: {id:<id>, value:<any>, label:<any>
+  //edge format: {from: <id_1>, to:<id_2>, value:<num>}
+  const ids = {};
+  const nodes = Object.keys(this.dict).map((word, i) => {
+    const node = {
+      id: i + 1,
+      value: word,
+      label: word
+    };
+    ids[word] = node.id;
+    return node;
+  });
+  const edges = [];
+  for (let node of nodes) {
+    const edgeObj = this.dict[node.value];
+    const edgeList = Object.entries(edgeObj);
+    for (let edge of edgeList) {
+      const singleEdge = {
+        from: node.id,
+        to: ids[edge[0]],
+        weight: edge[1]
+      };
+      edges.push(singleEdge);
+    }
+  }
+  console.log(nodes.length);
+  return {
+    nodes,
+    edges
+  };
 };
 
 //helper functions
