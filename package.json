@@ -1,6 +1,6 @@
 {
   "name": "ez-markov",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "ingests text and generates a graph to produce markov chains",
   "main": "index.js",
   "scripts": {
