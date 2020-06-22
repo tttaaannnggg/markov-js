@@ -44,8 +44,7 @@ console.log(chain.getSentence()); //generates a sentence based off of the text;
 
 ### Exporting text
 
--`.export()`
-
-- exports an object in the format `{nodes:<node>[], edges:<edge>[]}`, containing an array of `<nodes>` and an array of `<edges>`, suitable for direct usage with [react-graph-vis](https://www.npmjs.com/package/react-graph-vis)
-- each node is formatted as follows: `{id: <int>, value: <str>, label: <str>}`, where `id` is a primary key used to reference a given node, and `value` and `label` are the word that corresponds to the node
-- each edge is formatted as follows: `{from:<int>, to:<int>, weight:<int>}`, where `from` is the `id` corresponding to the originating node in a bigram, and `to` is the next word in the bigram, with `weight` being the number of occurences of that given bigram.
+- `.export()`
+  - exports an object in the format `{nodes:<node>[], edges:<edge>[]}`, containing an array of `<nodes>` and an array of `<edges>`, suitable for direct usage with [react-graph-vis](https://www.npmjs.com/package/react-graph-vis)
+  - each node is formatted as follows: `{id: <int>, value: <str>, label: <str>}`, where `id` is a primary key used to reference a given node, and `value` and `label` are the word that corresponds to the node
+  - each edge is formatted as follows: `{from:<int>, to:<int>, weight:<int>}`, where `from` is the `id` corresponding to the originating node in a bigram, and `to` is the next word in the bigram, with `weight` being the number of occurences of that given bigram.
